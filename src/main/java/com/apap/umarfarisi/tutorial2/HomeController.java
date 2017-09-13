@@ -11,9 +11,27 @@ public class HomeController {
 	public String multiplication(@RequestParam(name = "num1" , defaultValue ="0") String num1 , 
 			@RequestParam(name = "num2"  , defaultValue ="0") String num2 , 
 			Model model) {
-		model.addAttribute("num1", num1);
-		model.addAttribute("num2", num2);
-		model.addAttribute("result", (Integer.valueOf(num1) * Integer.valueOf(num2)));
+		
+		int num1Value = parsingParam(num1);
+		int num2Value = parsingParam(num2);
+		
+		model.addAttribute("num1", num1Value);
+		model.addAttribute("num2", num2Value);
+		model.addAttribute("result", (num1Value * num2Value));
 		return "home";
 	}
+	
+	/**
+	 * parsing param to be integer from string, non integer param such as "aaaa" will be 0
+	 * @param param param to be parsing to integer
+	 * @return param with type integer
+	 */
+	public int parsingParam(String param) {
+		try {
+			return Integer.valueOf(param);
+		}catch(Exception e) {
+			return 0;
+		}
+	}
+	
 }
